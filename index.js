@@ -1,17 +1,25 @@
 const express = require('express');
 const filmovi = require('./handlers/filmovi');
 const bodyParser = require('body-parser');
-const api = express();
+
+
+const config = require('./config/index.js');
 const DBConn = require('./db/connection');
-DBConn.init();
+
+var c = config.getConfig("db");
+
+
+const api = express();
+DBConn.init(c);
 api.use(bodyParser.json());
+
 
 api.get('/api/v1/filmovi', filmovi.getAll);
 api.get('/api/v1/filmovi/:id', filmovi.getOne);
 api.post('/api/v1/filmovi', filmovi.save);
-api.put('/api/v1/filmovi:id', filmovi.replace);
-api.patch('/api/v1/filmovi:id', filmovi.update);
-api.delete('/api/v1/filmovi:id', filmovi.remove);
+api.put('/api/v1/filmovi/:id', filmovi.replace);
+api.patch('/api/v1/filmovi/:id', filmovi.update);
+api.delete('/api/v1/filmovi/:id', filmovi.remove);
 
 api.listen(8080, err => {
     if(err){
