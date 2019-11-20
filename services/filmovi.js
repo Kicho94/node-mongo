@@ -1,10 +1,10 @@
 const express = require('express');
-const filmovi = require('./handlers/filmovi');
+const filmovi = require('../handlers/filmovi');
 const bodyParser = require('body-parser');
 
 
-const config = require('./config/index.js');
-const DBConn = require('./db/connection');
+const config = require('../config/index.js');
+const DBConn = require('../db/connection');
 
 var c = config.getConfig("db");
 
