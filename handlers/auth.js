@@ -65,7 +65,7 @@ const login = (req, res) => {
 }
 
 const renew = (req, res) => {
-    return res.status(200).send(req.user);
+    return res.status(200).send(req.user.id);
 }
 const resetLink = (req, res) => {
     return res.status(200).send('ok');

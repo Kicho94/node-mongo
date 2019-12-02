@@ -3,13 +3,16 @@ const configFile = './config.json';
 var conf = null;
 
 const getConfig = (section) =>{
-    if(conf == null && fs.existsSync(configFile)){
-      var json =  fs.readFileSync(configFile);
-      conf = JSON.parse(json);
+    if(fs.existsSync(configFile)){
+        if(conf == null){
+            var json =  fs.readFileSync(configFile);
+            conf = JSON.parse(json);
+          }
+          return conf[section];
     } else {
-        console.error('Could not find congif file!');
+        console.error('Could not find config file!');
     }
-    return conf[section];
+    return null;
 }
 
 module.exports = {
