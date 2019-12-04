@@ -18,9 +18,9 @@ const Filmovi = mongoose.model(
             })
     );
 
-    const getAll = (userID) => {
+    const getAll = (q, sort) => {
         return new Promise((success, fail) => {
-            Filmovi.find({user_id: userID}, (err, data) => {
+            Filmovi.find(q, {}, {sort : sort}, (err, data) => {
                 if(err){
                     return fail(err);
                 }
