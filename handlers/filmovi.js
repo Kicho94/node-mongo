@@ -67,7 +67,7 @@ const save = (req, res) => {
     if(data.godina == undefined || data.godina.length == 0){er++;};
     if(data.rezija == undefined || data.rezija.length == 0){er++;};
     if(data.oskar == undefined){er++;};
-   if(er == 0){
+    if(er == 0){
     mFilmovi.save({...data, user_id: req.user.id})
     .then( () => {
         res.status(201).send('Created')

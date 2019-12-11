@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uri = 'mongodb+srv://{username}:{password}@{host}/{dbname}?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://{username}:{password}@{host}/{dbname}?retryWrites=true&w=majority';
 
 const init = (config) => {
     mongoose.connect(parseCString(config), {useNewUrlParser: true, useUnifiedTopology: true})
@@ -17,7 +17,7 @@ const parseCString = (config) =>{
  cs = cs.replace('{host}', config.host);
  cs = cs.replace('{dbname}', config.dbname);
  return cs
-}
+};
 
 module.exports = {
     init
