@@ -8,6 +8,7 @@ const getAll = (req, res) => {
 
     if(req.query.oskar != undefined){
         q.oskar = req.query.oskar === 'true' ? true : false;
+        
     }
     if(req.query.ime != undefined){
             q.ime = req.query.ime 
