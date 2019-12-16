@@ -5,18 +5,19 @@ const fileupload = require('express-fileupload');
 const jwt = require('express-jwt')
 
 var api = express();
-// api.use(
-//     jwt( { secret: config.getConfig('jwt').key} )
-//         .unless(
-//             { path: ['/api/v1/register', '/api/v1/login', '/public']}
-//         )
-//  );
+api.use(
+    jwt( { secret: config.getConfig('jwt').key} )
+        .unless(
+            { path: ['/api/v1/register', '/api/v1/login', '/public']}
+        )   
+ );
 
  api.use(fileupload({
      limits: { fileSize: 50 * 1024 * 1024},
  }));
 
  api.post('/api/v1/upload', files.UploadFile);
+ api.get('/api/v1/upload/:filename', files.DownloadFile);
 
  api.listen(8082, err => {
     if(err){
