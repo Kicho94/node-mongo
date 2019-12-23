@@ -20,12 +20,12 @@ api.use(bodyParser.json());
 api.use(
     jwt( { secret: config.getConfig('jwt').key} )
         .unless(
-            { path: ['/api/v1/register', '/api/v1/login', '/public']}
+            { path: ['/api/v1/register', '/api/v1/login', '/public', '/api/v1/confirm']}
         )
     );
 
 
-
+api.post('/api/v1/confirm/:confirm_hash', auth.confirm)
 api.post('/api/v1/register', auth.register);
 api.post('/api/v1/login', auth.login);
 api.get('/api/v1/renew', auth.renew);
