@@ -43,7 +43,7 @@ api.use(function(err, req, res, next) {
 
 api.listen(8081, err => {
     if(err){
-        console.log('Could not start server');
+        console.log('Could not start server 8081');
         console.log(err);
         return;
     }
