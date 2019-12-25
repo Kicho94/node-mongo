@@ -116,5 +116,6 @@ module.exports = {
     renew,
     resetLink,
     resetPassword,
-    changePassword
+    changePassword,
+    confirm
 }
