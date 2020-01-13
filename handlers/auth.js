@@ -4,6 +4,8 @@ var validator = require('node-input-validator');
 var bcrypt = require ('bcryptjs');
 var jwt = require('jsonwebtoken');
 const config = require('../config/index.js');
+const randomstring = require('randomstring');
+const sgMail = require('@sendgrid/mail');
 
 const register = (req, res) => {
     var v = new validator.Validator(req.body, vUsers.createUser);
@@ -16,8 +18,28 @@ const register = (req, res) => {
                         throw new Error(err);
                         return;
                     }
-              return mUsers.createUser({...req.body, password : hash})
+            var confirm_hash = randomstring.generate({
+                length:10,
+                charset: 'alphanumeric'
+            });
+               mUsers.createUser(
+                  {...req.body, 
+                   password : hash,
+                    confirm_hash : confirm_hash,
+                    confirmed : false
                 });
+                sgMail.setApiKey(config.getConfig(mailer.key));
+                const msg = {
+                    to : req.body.email,
+                    from : 'bojang@gmail.com',
+                    subject : 'Thanks for registering',
+                    text : 'Thanks for registering',
+                    html : `<a href = "http://localhost:8081/api/v1/confirm/${confirm_hash}>Click here to confirm your account</a>`,
+                };
+                sgMail.send(msg);x
+                return;
+                });
+                
             });
            
         } else {
@@ -65,6 +87,17 @@ const login = (req, res) => {
     });      
 }
 
+const confirm  = (req, res) => {
+    var hash = req.params.confirm_hash;
+    mUsers.confirmUserAccount(hash)
+    .then(() => { 
+        return res.status(200).send('ok')
+    })
+    .catch((err) => {
+        return res.status(500).send('Internal Server Error')
+    })
+}
+
 const renew = (req, res) => {
     return res.status(200).send(req.user.id);
 }
@@ -84,5 +117,6 @@ module.exports = {
     renew,
     resetLink,
     resetPassword,
-    changePassword
+    changePassword,
+    confirm
 }
