@@ -3,15 +3,18 @@ const mFilmovi = require('../models/filmovi');
 const getAll = (req, res) => {
     
     console.log(req.query);
-    let q = {};
+    let q = {user_id : req.user.id };
+            
     let sort = {};
-
+    
+    
     if(req.query.oskar != undefined){
         q.oskar = req.query.oskar === 'true' ? true : false;
         
     }
     if(req.query.ime != undefined){
             q.ime = req.query.ime 
+      
         }
     if(req.query.godina_from != undefined){
         if(q.godina == undefined){
@@ -38,10 +41,12 @@ const getAll = (req, res) => {
 
     }
 
+    
 
     mFilmovi.getAll(q, sort)
     .then(data => {
     res.status(200).send(data);
+    console.log(data)
     })
     .catch(err => {
         res.status(500).send(err);

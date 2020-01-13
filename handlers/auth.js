@@ -54,13 +54,14 @@ const login = (req, res) => {
                 var token = jwt.sign(tokenData, config.getConfig('jwt').key);
                 return res.status(200).send({jwt: token})
             }
-            return res.status(200).send('not found');
+            return res.status(404).send('not found');
         });
        
     })
     .catch(err => {
         console.log(err);
-        return res.status(500).send('internal server error')
+        return res.status(500).send('internal server error');
+        
     });      
 }
 
